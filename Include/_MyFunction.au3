@@ -52,6 +52,47 @@ EndFunc   ;==>_Unzip
 
 
 ; #FUNCTION# ===================================================================================================
+; Name...........: _Extractlha
+; Description ...: Extract with lha.exe
+; Syntax.........: _Extractlha($iPathLha , $iPathTarget)
+; Parameters ....: $iPathLha	- Lha Path
+;~ 				   $iPathTarget	- Target folder path
+; Return values .: Success      - Return the target folder path
+;                  Failure      - -1
+; Author ........: Elom, based on _Unzip
+; Modified.......:
+; Remarks .......:
+; Related .......:
+; Link ..........;
+; Example .......;
+Func _Extractlha($iPathLha, $iPathTarget)
+	Local $sRun, $iPid, $_StderrRead
+	Local $sDrive, $sDir, $sFileName, $iExtension, $iPath_Temp
+	_PathSplit($iPathLha, $sDrive, $sDir, $sFileName, $iExtension)
+	If StringLower($iExtension) <> ".lha" Then
+		_LOG("Not a LHA file : " & $iPathLha, 2, $iLOGPath)
+		Return -1
+	EndIf
+	$sRun = '"' & $iScriptPath & '\Ressources\lha.exe" x -fv "' & $iPathLha & '" -w "' & $iPathTarget & '"'
+	_LOG("lha command: " & $sRun, 1, $iLOGPath)
+	$iPid = Run($sRun, '', @SW_HIDE, $STDERR_CHILD + $STDOUT_CHILD)
+	While ProcessExists($iPid)
+		$_StderrRead = StderrRead($iPid)
+		If Not @error And $_StderrRead <> '' Then
+			If (StringInStr($_StderrRead, 'LHa: Error:') Or StringInStr($_StderrRead, 'LHa: Fatal error:')) And Not StringInStr($_StderrRead, 'melted') Then
+				_LOG("Error while decompressing LHA " & $iPathLha, 2, $iLOGPath)
+				Return -2
+			EndIf
+		EndIf
+	WEnd
+	_LOG("Decompressed LHA : " & $iPathLha & " to " & $iPathTarget, 0, $iLOGPath)
+	Return $iPathTarget
+EndFunc	  ;==>_Extractlha
+
+
+
+
+; #FUNCTION# ===================================================================================================
 ; Name...........: _URIEncode
 ; Description ...: Create a valid URL
 ; Syntax.........: _URIEncode($sData)

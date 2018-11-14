@@ -299,7 +299,7 @@
 </Options>
 
 <mess_ssh_killallForced>UXS will kill EmulationStation to scrape.</mess_ssh_killallForced>
-<win_config_MISC_GroupMISC_ScrapeZip>UnZip files</win_config_MISC_GroupMISC_ScrapeZip>
+<win_config_MISC_GroupMISC_ScrapeZip>Decompress Zip, Lha</win_config_MISC_GroupMISC_ScrapeZip>
 <mess_continue>Do you want to continue ?</mess_continue>
 <mess_Yes>Yes</mess_Yes>
 <mess_No>No</mess_No>

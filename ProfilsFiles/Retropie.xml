@@ -6,7 +6,7 @@
 		<Target_Image_Extension>png</Target_Image_Extension>
 		<Target_Image_Width>600</Target_Image_Width>
 		<Target_Image_Height>400</Target_Image_Height>
-		<Research>*.32x;*.a26;*.a52;*.a78;*.adf;*.adz;*.asc;*.atr;*.atr.gz;*.bas;*.bat;*.bin;*.bz2;*.cas;*.cbn;*.ccc;*.ccd;*.cdi;*.cdt;*.chd;*.col;*.com;*.cpc;*.crt;*.cso;*.ctr;*.cue;*.d64;*.dcm;*.dmk;*.dms;*.dsk;*.dump;*.exe;*.fba;*.fds;*.fig;*.g64;*.gam;*.gb;*.gba;*.gbc;*.gdi;*.gen;*.gg;*.gz;*.ima;*.img;*.int;*.ipf;*.iso;*.j64;*.jag;*.jvc;*.lnx;*.m3u;*.md;*.mdf;*.mgd;*.mgt;*.mx1;*.mx2;*.n64;*.nds;*.nes;*.ngc;*.ngp;*.nib;*.os9;*.pbp;*.pce;*.po;*.prg;*.raw;*.rom;*.sad;*.sbt;*.scl;*.sfc;*.sg;*.sh;*.smc;*.smd;*.sms;*.sna;*.st;*.stx;*.swc;*.szx;*.t64;*.tap;*.toc;*.trd;*.tzx;*.udi;*.v64;*.vb;*.vdk;*.vec;*.vsf;*.wav;*.ws;*.wsc;*.x64;*.xex;*.xfd;*.xfd.gz;*.z;*.z2;*.z64;*.z80;*.zip;*.znx||</Research>
+		<Research>*.32x;*.a26;*.a52;*.a78;*.adf;*.adz;*.asc;*.atr;*.atr.gz;*.bas;*.bat;*.bin;*.bz2;*.cas;*.cbn;*.ccc;*.ccd;*.cdi;*.cdt;*.chd;*.col;*.com;*.cpc;*.crt;*.cso;*.ctr;*.cue;*.d64;*.dcm;*.dmk;*.dms;*.dsk;*.dump;*.exe;*.fba;*.fds;*.fig;*.g64;*.gam;*.gb;*.gba;*.gbc;*.gdi;*.gen;*.gg;*.gz;*.ima;*.img;*.int;*.ipf;*.iso;*.j64;*.jag;*.jvc;*.lnx;*.m3u;*.md;*.mdf;*.mgd;*.mgt;*.mx1;*.mx2;*.n64;*.nds;*.nes;*.ngc;*.ngp;*.nib;*.os9;*.pbp;*.pce;*.po;*.prg;*.raw;*.rom;*.sad;*.sbt;*.scl;*.sfc;*.sg;*.sh;*.smc;*.smd;*.sms;*.sna;*.st;*.stx;*.swc;*.szx;*.t64;*.tap;*.toc;*.trd;*.tzx;*.udi;*.v64;*.vb;*.vdk;*.vec;*.vsf;*.wav;*.ws;*.wsc;*.x64;*.xex;*.xfd;*.xfd.gz;*.z;*.z2;*.z64;*.z80;*.zip;*.znx;*.lha||</Research>
 	</General>
 	<DefaultAutoConf>
 		<Source_RootPath>\\retropie\roms</Source_RootPath>
@@ -96,10 +96,10 @@
 		<Target_CASE>Default</Target_CASE>
 	</Element>
 	<Element Type="Picture">
-		<Source_Type>XML_Download</Source_Type>
+		<Source_Type>MIX_Template</Source_Type>
 		<Source_Download_Path>%Local_Path_File%</Source_Download_Path>
 		<Source_Download_Tag>-image</Source_Download_Tag>
-		<Source_Download_Ext>jpg</Source_Download_Ext>
+		<Source_Download_Ext>png</Source_Download_Ext>
 		<Source_Value>Data/jeu/medias/media_screenshot</Source_Value>
 		<Target_Type>XML_Path</Target_Type>
 		<Target_Path_Type>%XML_Path_File%</Target_Path_Type>
@@ -109,7 +109,7 @@
 		<Source_Type>XML_Download</Source_Type>
 		<Source_Download_Path>%Local_Path_File%</Source_Download_Path>
 		<Source_Download_Tag>-image</Source_Download_Tag>
-		<Source_Download_Ext>jpg</Source_Download_Ext>
+		<Source_Download_Ext>png</Source_Download_Ext>
 		<Source_Value>Data/jeu/medias/media_boxs/media_boxs2d/media_box2d_%COUNTRY%</Source_Value>
 		<Target_Type>XML_Path</Target_Type>
 		<Target_Path_Type>%XML_Path_File%</Target_Path_Type>

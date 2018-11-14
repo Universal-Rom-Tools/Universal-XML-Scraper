@@ -132,7 +132,7 @@
 			<win_config_MISC_GroupMISC_MissingMode>Add missing roms in XML</win_config_MISC_GroupMISC_MissingMode>
 			<win_config_MISC_GroupMISC_RechSys>Auto select your system</win_config_MISC_GroupMISC_RechSys>
 			<win_config_MISC_GroupMISC_Mirror>Use DigiMirror</win_config_MISC_GroupMISC_Mirror>
-			<win_config_MISC_GroupMISC_ScrapeZip>Unzip files</win_config_MISC_GroupMISC_ScrapeZip>
+			<win_config_MISC_GroupMISC_ScrapeZip>Decompress Zip, Lha</win_config_MISC_GroupMISC_ScrapeZip>
 			<win_config_MISC_GroupScreenScraper>Screenscraper</win_config_MISC_GroupScreenScraper>
 			<win_config_MISC_GroupScreenScraper_Login>Screenscraper Login</win_config_MISC_GroupScreenScraper_Login>
 			<win_config_MISC_GroupScreenScraper_Password>Screenscraper Password</win_config_MISC_GroupScreenScraper_Password>
