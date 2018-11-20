@@ -1,6 +1,5 @@
 # Universal-XML-Scraper
-Scraper de Rom
-Forked from Universal-Rom-Tools/Universal-XML-Scraper.
+Rom Scraper Forked from Universal-Rom-Tools/Universal-XML-Scraper and just improved a bit.
 
 I just needed to improve Universal-XML-Scraper for Amiga ROMs.
 I have a collection of WHDLoad ROMs, but almost every ROM is compacted in ZIP format, which is not supported by Amiberry.
