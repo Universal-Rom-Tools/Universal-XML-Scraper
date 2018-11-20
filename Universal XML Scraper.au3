@@ -1,11 +1,11 @@
 #Region ;**** Directives created by AutoIt3Wrapper_GUI ****
 #AutoIt3Wrapper_Icon=Ressources\Images\Universal_Xml_Scraper.ico
-#AutoIt3Wrapper_Outfile=..\BIN\Universal_XML_Scraper.exe
-#AutoIt3Wrapper_Outfile_x64=..\BIN\Universal_XML_Scraper64.exe
+#AutoIt3Wrapper_Outfile=.\Universal_XML_Scraper.exe
+#AutoIt3Wrapper_Outfile_x64=.\Universal_XML_Scraper64.exe
 #AutoIt3Wrapper_Compile_Both=y
 #AutoIt3Wrapper_UseX64=y
 #AutoIt3Wrapper_Res_Description=Scraper XML Universel
-#AutoIt3Wrapper_Res_Fileversion=2.2.0.4
+#AutoIt3Wrapper_Res_Fileversion=2.2.0.5
 #AutoIt3Wrapper_Res_Fileversion_AutoIncrement=p
 #AutoIt3Wrapper_Res_LegalCopyright=LEGRAS David
 #AutoIt3Wrapper_Res_Language=1036
