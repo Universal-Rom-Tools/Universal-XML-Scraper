@@ -1,11 +1,11 @@
 #Region ;**** Directives created by AutoIt3Wrapper_GUI ****
 #AutoIt3Wrapper_Icon=Ressources\Images\Universal_Xml_Scraper.ico
-#AutoIt3Wrapper_Outfile=..\BIN\Universal_XML_Scraper.exe
-#AutoIt3Wrapper_Outfile_x64=..\BIN\Universal_XML_Scraper64.exe
+#AutoIt3Wrapper_Outfile=.\Universal_XML_Scraper.exe
+#AutoIt3Wrapper_Outfile_x64=.\Universal_XML_Scraper64.exe
 #AutoIt3Wrapper_Compile_Both=y
 #AutoIt3Wrapper_UseX64=y
 #AutoIt3Wrapper_Res_Description=Scraper XML Universel
-#AutoIt3Wrapper_Res_Fileversion=2.2.0.4
+#AutoIt3Wrapper_Res_Fileversion=2.2.0.5
 #AutoIt3Wrapper_Res_Fileversion_AutoIncrement=p
 #AutoIt3Wrapper_Res_LegalCopyright=LEGRAS David
 #AutoIt3Wrapper_Res_Language=1036
@@ -2284,6 +2284,74 @@ Func _ScrapeZipContent($aRomList, $vBoucle)
 	Return $aRomList
 EndFunc   ;==>_ScrapeZipContent
 
+Func _ScrapeLhaContent($aRomList, $vBoucle)
+
+	Local $sDrive = "", $sDir = "", $sFileName = "", $sExtension = ""
+	Local $aPathSplit = _PathSplit($aRomList[$vBoucle][0], $sDrive, $sDir, $sFileName, $sExtension)
+
+	; Check if it is a LHA
+	If $sExtension <> ".lha" Then
+		Return $aRomList
+	EndIf
+
+	_LOG("File '" & $aRomList[$vBoucle][1] & "' is a LHA. Scraping contents...", 1, $iLOGPath)
+
+	; now un-lha it to a temp folder
+	Local $vLhaDir = @TempDir & "\" & "UXS_LHA_Temp_" & $aRomList[$vBoucle][2]
+	Local $vLhaDirEx = $vLhaDir & "\" & "_extract"
+	Local $vSrcPath = $vLhaDir & "\" & $aRomList[$vBoucle][0]
+	DirRemove($vLhaDir, 1)
+	FileCopy($aRomList[$vBoucle][1], $vSrcPath, $FC_CREATEPATH)
+
+	$vResult = _Extractlha($vSrcPath, $vLhaDirEx)
+	If $vResult < 0 Then
+		Switch $vResult
+			Case 1
+				_LOG("not a LHA file", 2, $iLOGPath)
+				Return $aRomList
+			Case 2
+				_LOG("Impossible to decompress LHA", 2, $iLOGPath)
+				Return $aRomList
+			Case Else
+				_LOG("Unknown LHA Error (" & @error & ")", 2, $iLOGPath)
+				Return $aRomList
+		EndSwitch
+	EndIf
+
+	; get a list of all decompressed LHA files
+	Local $aLhaRomList = _FileListToArrayRec($vLhaDirEx, "*", $FLTAR_FILES, $FLTAR_RECUR, $FLTAR_SORT)
+	_LOG("Read files from LHA: " & _ArrayToString($aLhaRomList), 1, $iLOGPath)
+
+	For $vIdx = 1 To 12
+		_ArrayColInsert($aLhaRomList, $vIdx)
+	Next
+
+	For $vIdx = 1 To UBound($aLhaRomList) - 1
+		$aLhaRomList[$vIdx][1] = $vLhaDirEx & "\" & $aLhaRomList[$vIdx][0]
+		$aPathSplit = _PathSplit($aLhaRomList[$vIdx][0], $sDrive, $sDir, $sFileName, $sExtension)
+		$aLhaRomList[$vIdx][2] = $aPathSplit[3]
+		$aLhaRomList[$vIdx][9] = -1
+	Next
+
+	; iterate over them and check if we can match one
+	For $vBoucleLha = 1 To UBound($aLhaRomList) - 1
+		_LOG("Scraping LHA content file: " & $aLhaRomList[$vBoucleLha][0], 1, $iLOGPath)
+		If $aLhaRomList[$vBoucleLha][3] < 2 Then
+			$aLhaRomList = _CalcHash($aLhaRomList, $vBoucleLha, 0)
+		EndIf
+		$aLhaRomList = _DownloadROMXML($aLhaRomList, $vBoucleLha, $aConfig[12], $aConfig[13], $aConfig[14])
+		If ($aLhaRomList[$vBoucleLha][9] = 1) Then
+			_LOG("Found match for LHA content file: " & $aLhaRomList[$vBoucleLha][0], 1, $iLOGPath)
+			; we found a match so copy the match result to the original LHA and stop
+			$aRomList[$vBoucle][8] = $aLhaRomList[$vBoucleLha][8]
+			$aRomList[$vBoucle][9] = $aLhaRomList[$vBoucleLha][9]
+			ExitLoop
+		EndIf
+	Next
+	DirRemove($vLhaDir, 1)
+	Return $aRomList
+EndFunc   ;==>_ScrapeLhaContent
+
 Func _LaunchEngine($oXMLProfil, $vNbThread = 1)
 	Local $vTEMPPathSSCheck, $vNbThreadMax, $aScrapeEngine, $vPID = 1
 
@@ -2413,7 +2481,19 @@ Func _SCRAPE($oXMLProfil, $aScrapeEngine, $vNbThread = 1, $vFullScrape = 0)
 						; check if the ROM could be found otherwise try to scrape inside ZIP
 						$vZipSearch = IniRead($iINIPath, "LAST_USE", "$vScrapeZip", 0)
 						If ($aRomList[$vBoucle][9] = 0) And $vZipSearch = 1 Then
-							$aRomList = _ScrapeZipContent($aRomList, $vBoucle)
+
+							; check if it is a ZIP or a LHA (supported archives)
+							Local $sDrive = "", $sDir = "", $sFileName = "", $sExtension = ""
+							Local $aPathSplit = _PathSplit($aRomList[$vBoucle][0], $sDrive, $sDir, $sFileName, $sExtension)
+
+							Switch $sExtension
+								Case ".zip"
+									$aRomList = _ScrapeZipContent($aRomList, $vBoucle)
+								Case ".lha"
+									$aRomList = _ScrapeLhaContent($aRomList, $vBoucle)
+
+							EndSwitch
+
 						EndIf
 
 						If ($aRomList[$vBoucle][9] = 1 Or $vMissingRom_Mode = 1 Or $aRomList[$vBoucle][3] > 1) And _Check_Cancel() Then
